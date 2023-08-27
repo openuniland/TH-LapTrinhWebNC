@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bài 13</title>
+  </head>
+  <body>
+    <script>
+      function main() {
+        const { longestWord, shortestWord } = handleOpenPrompt();
+
+        handleOpenAlert(shortestWord, longestWord);
+
+        handleCancelOrAgain();
+      }
+
+      main();
+
+      function handleOpenPrompt() {
+        const paragraph = prompt('Nhập vào một đoạn văn bản!', '');
+
+        const words = paragraph.split(' ');
+
+        let shortestWord = words[0];
+        let longestWord = words[0];
+
+        for (const word of words) {
+          if (word.length < shortestWord.length) {
+            shortestWord = word;
+          }
+          if (word.length > longestWord.length) {
+            longestWord = word;
+          }
+        }
+
+        return {
+          shortestWord,
+          longestWord,
+        };
+      }
+
+      function handleOpenAlert(shortestWord, longestWord) {
+        alert(`Từ ngắn nhất: ${shortestWord}\nTừ dài nhất: ${longestWord}`);
+      }
+
+      function handleCancelOrAgain() {
+        const isAgain = confirm('Bạn có muốn tiếp tục không?');
+
+        if (isAgain) {
+          main();
+        }
+      }
+    </script>
+  </body>
+</html>

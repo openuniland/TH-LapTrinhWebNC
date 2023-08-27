@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bài 14</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+
+      .box {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 40px 60px;
+        border: 1px solid black;
+        border-radius: 5px;
+      }
+
+      .label {
+        min-width: 80px;
+        display: inline-block;
+      }
+
+      .boxItem {
+        padding: 6px 0;
+      }
+
+      .actWrapper {
+        display: flex;
+        justify-content: end;
+        width: 100%;
+        margin-top: 20px;
+      }
+
+      #act {
+        margin-right: 10px;
+      }
+
+      .btn {
+        padding: 6px 12px;
+      }
+
+      #output {
+        padding: 12px 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="box">
+        <div class="boxItem">
+          <label class="label">Chiều cao</label>
+          <input type="text" id="height" />
+          <span>m</span>
+        </div>
+        <div class="boxItem">
+          <label class="label">Cân nặng</label>
+          <input type="text" id="weight" />
+          <span>kg</span>
+        </div>
+
+        <p id="output"></p>
+
+        <div class="actWrapper">
+          <button id="act" class="btn">Thực hiện</button>
+          <button id="cancel" class="btn">Hủy</button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      function getBMI(height, weight) {
+        const BMI = Math.round(weight / (height * height));
+
+        if (BMI < 18.5) {
+          return {
+            data: 'Dưới chuẩn',
+            BMI,
+          };
+        } else if (BMI >= 18.5 && BMI <= 25) {
+          return {
+            data: 'Chuẩn',
+            BMI,
+          };
+        } else if (BMI > 25 && BMI < 30) {
+          return {
+            data: 'Thừa cân',
+            BMI,
+          };
+        } else if (BMI >= 30 && BMI <= 40) {
+          return {
+            data: 'Béo, cần giảm cân',
+            BMI,
+          };
+        } else if (BMI > 40) {
+          return {
+            data: 'Rất béo, cần giảm cân ngay lập tức',
+            BMI,
+          };
+        }
+
+        return {
+          data: 'Có lỗi xảy ra!',
+          BMI,
+        };
+      }
+
+      const actBtn = document.getElementById('act');
+      const cancelBtn = document.getElementById('cancel');
+      const output = document.getElementById('output');
+      const weight = document.getElementById('weight');
+      const height = document.getElementById('height');
+
+      actBtn.addEventListener('click', () => {
+        const BMI = getBMI(height.value, weight.value);
+
+        if (BMI.BMI === undefined) {
+          output.innerHTML = 'Vui lòng nhập đầy đủ thông tin';
+          return;
+        }
+
+        output.innerHTML = `BMI của bạn là <strong>${BMI.BMI}</strong>, bạn ở mức ${BMI.data}`;
+      });
+
+      cancelBtn.addEventListener('click', () => {
+        weight.value = '';
+        height.value = '';
+        output.innerHTML = '';
+      });
+    </script>
+  </body>
+</html>
